@@ -21,6 +21,15 @@ function! s:Opener._checkToCloseTree(newtab)
     endif
 endfunction
 
+function! s:SetSplitRight(goRight)
+
+    if a:goRight
+        set splitright
+    else
+        set nosplitright
+    end
+endfunction
+
 "FUNCTION: Opener._gotoTargetWin() {{{1
 function! s:Opener._gotoTargetWin()
     if b:NERDTreeType ==# "secondary"
@@ -35,7 +44,12 @@ function! s:Opener._gotoTargetWin()
         call self._checkToCloseTree(1)
 
         if self._where == 'v'
+
+            let oldSplitRight = &splitright
+            call s:SetSplitRight( self._dir ==# 'l' )
             call self._newVSplit()
+            call s:SetSplitRight(oldSplitRight)
+
         elseif self._where == 'h'
             call self._newSplit()
         elseif self._where == 't'
@@ -70,6 +84,7 @@ function! s:Opener.New(path, opts)
     let newObj._reuse = nerdtree#has_opt(a:opts, 'reuse')
     let newObj._keepopen = nerdtree#has_opt(a:opts, 'keepopen')
     let newObj._where = has_key(a:opts, 'where') ? a:opts['where'] : ''
+    let newObj._dir = has_key(a:opts, 'dir') ? a:opts['dir'] : 'h'
     let newObj._treetype = b:NERDTreeType
     call newObj._saveCursorPos()
 

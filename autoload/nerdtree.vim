@@ -76,9 +76,11 @@ function! nerdtree#createDefaultBindings()
 
     call NERDTreeAddKeyMap({ 'key': g:NERDTreeMapOpenSplit, 'scope': "Node", 'callback': s."openHSplit" })
     call NERDTreeAddKeyMap({ 'key': g:NERDTreeMapOpenVSplit, 'scope': "Node", 'callback': s."openVSplit" })
+    call NERDTreeAddKeyMap({ 'key': g:NERDTreeMapOpenVSplit2, 'scope': "Node", 'callback': s."openVSplit2" })
 
     call NERDTreeAddKeyMap({ 'key': g:NERDTreeMapOpenSplit, 'scope': "Bookmark", 'callback': s."openHSplit" })
     call NERDTreeAddKeyMap({ 'key': g:NERDTreeMapOpenVSplit, 'scope': "Bookmark", 'callback': s."openVSplit" })
+    call NERDTreeAddKeyMap({ 'key': g:NERDTreeMapPreviewVSplit2, 'scope': "Node", 'callback': s."previewNodeVSplit2" })
 
     call NERDTreeAddKeyMap({ 'key': g:NERDTreeMapPreview, 'scope': "Node", 'callback': s."previewNodeCurrent" })
     call NERDTreeAddKeyMap({ 'key': g:NERDTreeMapPreviewVSplit, 'scope': "Node", 'callback': s."previewNodeVSplit" })
@@ -1231,6 +1233,11 @@ function! s:openHSplit(target)
 endfunction
 
 " FUNCTION: s:openVSplit(target) {{{2
+function! s:openVSplit2(target)
+    call a:target.activate({'where': 'v', 'dir': 'l'})
+endfunction
+
+" FUNCTION: s:openVSplit(target) {{{2
 function! s:openVSplit(target)
     call a:target.activate({'where': 'v'})
 endfunction
@@ -1267,6 +1274,11 @@ endfunction
 "FUNCTION: s:previewNodeHSplit(node) {{{2
 function! s:previewNodeHSplit(node)
     call a:node.open({'stay': 1, 'where': 'h', 'keepopen': 1})
+endfunction
+
+"FUNCTION: s:previewNodeVSplit2(node) {{{2
+function! s:previewNodeVSplit2(node)
+    call a:node.open({'stay': 1, 'where': 'v', 'keepopen': 1, 'dir': 'l'})
 endfunction
 
 "FUNCTION: s:previewNodeVSplit(node) {{{2
